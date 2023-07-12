@@ -1,0 +1,26 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+public class HandlingJavaAlerts {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		String text = "Santhosh";
+		System.setProperty("webdriver.chrome.driver", "/Users/santhoshalagiri/Desktop/Selenium/chromedriver_mac64/chromedriver");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+		driver.findElement(By.id("name")).sendKeys(text);
+		driver.findElement(By.cssSelector("[id='alertbtn']")).click();
+		//Before we accept the alert, lets grab the text on that alert
+		System.out.println(driver.switchTo().alert().getText());
+		
+		driver.switchTo().alert().accept();
+		
+		
+		
+	}
+
+}

@@ -1,0 +1,70 @@
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Locators {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.chrome.driver", "/Users/santhoshalagiri/Desktop/Selenium/chromedriver_mac64/chromedriver");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		driver.get("https://rahulshettyacademy.com/locatorspractice/");
+		driver.findElement(By.id("inputUsername")).sendKeys("rahul");
+		driver.findElement(By.name("inputPassword")).sendKeys("hello123");
+		driver.findElement(By.className("signInBtn")).click();
+		
+		//Construct a CSS Selector
+		//IF you have a class name -> tagname.classname
+		//Similarly if you have id atrribute you can construct using
+		//id -> tagname#id -> 'input#inputUsername' (Alternate way of
+		//constructing CSS selector from a HTML code)
+		//If you dont have id or classname, there's one other way
+		//tagname[attribute='value'] -> Eg. input[placeholder='Username']
+		System.out.println(driver.findElement(By.cssSelector("p.error")).getText());
+		// While running the above code Selenium would throw an error saying
+		//NoSuchElementException meaning that its not able to locate the
+		//uniquely found attribute
+		//One of the reason is that Selenium executes faster and the error
+		//message is thrown after Selenium executes the script.
+		//Best way to solve is to add a wait sync to our script, which
+		//asks Selenium to wait patiently to see the error and capture it!!
+		//We add an implicit wait using driver.manage
+		driver.findElement(By.linkText("Forgot your password?")).click();
+		//Xpath - //Tagname[@attribute='value']
+		//input[@placeholder='Username']
+		//<input type="text" placeholder="Name"> **Construct Xpath
+		//for this HTML element
+		// //input[@placeholder='Name']
+		driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys("Santhosh");
+		//Lets construct the Xpath syntax with CSS locator!!
+		driver.findElement(By.cssSelector("input[placeholder='Email']")).sendKeys("san@nas.com");
+		driver.findElement(By.xpath("//input[@type='text'][2]")).clear();
+		//If we have 2 to 3 atrributes that have the same "text"
+		//and we dont have any other uniquely identified attribute
+		//We can still use the same syntax for constructing CSS locator
+		//or Xpath locator ending with an "index". Refer below,
+		// //Tagname[@attribute='value'][index] --> Xpath
+		// Tagname[attribute='value']:nth-child(index) --> Css Locator
+		//Since we have cleared the email id using 'clear action'. So
+		//To type another email id we point to the email 
+		driver.findElement(By.cssSelector("input[placeholder='Email']")).sendKeys("john@gmail.com");
+		//Another syntax for writing in Xpath and Css locator
+		//We can also write by traversing from parent to child
+		//So if you inspect form, form would be the main parent
+		//which encloses a subparent 'h2' that has childs 'type'
+		// //Parenttagname/Childtagname[index] --> //form/input[3] - For Xpath
+		driver.findElement(By.xpath("//form/input[3]")).sendKeys("9872321232");
+		driver.findElement(By.cssSelector(".reset-pwd-btn")).click();
+		System.out.println(driver.findElement(By.cssSelector("form p")).getText());
+		driver.findElement(By.xpath("//div[@class='forgot-pwd-btn-conainer']/button[1]")).click();
+		driver.findElement(By.cssSelector("#inputUsername")).sendKeys("rahul");
+		driver.findElement(By.cssSelector("input[type*='pass']")).sendKeys("rahulshettyacademy");
+		driver.findElement(By.id("chkboxOne")).click();
+		driver.findElement(By.xpath("/button[contains(@class,'submit')]")).click();
+	}
+
+}
